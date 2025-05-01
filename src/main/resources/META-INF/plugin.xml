@@ -10,9 +10,56 @@
     </description>
 
     <depends>com.intellij.modules.lang</depends>
+    <depends optional="true">CSS</depends>
+    <depends>com.intellij.css</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+        <!-- Gestion de l'autocomplétion -->
         <completion.contributor language="CSS" implementationClass="io.cssvarslinker.CssVarsCompletionContributor"/>
+        <completion.contributor language="HTML" implementationClass="io.cssvarslinker.CssVarsCompletionContributor"/>
+        <completion.contributor language="Vue" implementationClass="io.cssvarslinker.CssVarsCompletionContributor"/>
+        <completion.contributor language="SCSS" implementationClass="io.cssvarslinker.CssVarsCompletionContributor"/>
+        <completion.contributor language="Sass" implementationClass="io.cssvarslinker.CssVarsCompletionContributor"/>
+        <completion.contributor language="PostCSS" implementationClass="io.cssvarslinker.CssVarsCompletionContributor"/>
+
+        <!-- Gestion des références pour la navigation -->
+        <psi.referenceContributor language="CSS" implementationClass="io.cssvarslinker.CssVariableReferenceContributor"/>
+        <psi.referenceContributor language="HTML" implementationClass="io.cssvarslinker.CssVariableReferenceContributor"/>
+        <psi.referenceContributor language="Vue" implementationClass="io.cssvarslinker.CssVariableReferenceContributor"/>
+        <psi.referenceContributor language="SCSS" implementationClass="io.cssvarslinker.CssVariableReferenceContributor"/>
+        <psi.referenceContributor language="Sass" implementationClass="io.cssvarslinker.CssVariableReferenceContributor"/>
+        <psi.referenceContributor language="PostCSS" implementationClass="io.cssvarslinker.CssVariableReferenceContributor"/>
+
+        <!-- Documentation au survol -->
+        <documentationProvider language="CSS" implementationClass="io.cssvarslinker.CssVariableDocumentationProvider"/>
+        <documentationProvider language="HTML" implementationClass="io.cssvarslinker.CssVariableDocumentationProvider"/>
+        <documentationProvider language="Vue" implementationClass="io.cssvarslinker.CssVariableDocumentationProvider"/>
+        <documentationProvider language="SCSS" implementationClass="io.cssvarslinker.CssVariableDocumentationProvider"/>
+        <documentationProvider language="Sass" implementationClass="io.cssvarslinker.CssVariableDocumentationProvider"/>
+        <documentationProvider language="PostCSS" implementationClass="io.cssvarslinker.CssVariableDocumentationProvider"/>
+
+        <!-- Annotation pour masquer les erreurs visuellement -->
+        <annotator language="CSS" implementationClass="io.cssvarslinker.CssVariableFakeAnnotator"/>
+        <annotator language="HTML" implementationClass="io.cssvarslinker.CssVariableFakeAnnotator"/>
+        <annotator language="Vue" implementationClass="io.cssvarslinker.CssVariableFakeAnnotator"/>
+        <annotator language="SCSS" implementationClass="io.cssvarslinker.CssVariableFakeAnnotator"/>
+        <annotator language="Sass" implementationClass="io.cssvarslinker.CssVariableFakeAnnotator"/>
+        <annotator language="PostCSS" implementationClass="io.cssvarslinker.CssVariableFakeAnnotator"/>
+
+        <!-- Suppresseurs d'inspections pour éviter les erreurs -->
+        <inspectionSuppressor language="CSS" implementationClass="io.cssvarslinker.CssVariableInspectionSuppressor"/>
+        <inspectionSuppressor language="PostCSS" implementationClass="io.cssvarslinker.CssVariableInspectionSuppressor"/>
+        <inspectionSuppressor language="SCSS" implementationClass="io.cssvarslinker.CssVariableInspectionSuppressor"/>
+        <inspectionSuppressor language="Sass" implementationClass="io.cssvarslinker.CssVariableInspectionSuppressor"/>
+        <inspectionSuppressor language="HTML" implementationClass="io.cssvarslinker.CssVariableInspectionSuppressor"/>
+        <inspectionSuppressor language="Vue" implementationClass="io.cssvarslinker.CssVariableInspectionSuppressor"/>
+
+        <!-- Services de projet -->
+        <projectService serviceImplementation="io.cssvarslinker.CssVarsLoader"/>
+        <projectService serviceImplementation="io.cssvarslinker.CssVarsIndexService"/>
+
+        <!-- Activité de démarrage pour indexer les variables au lancement -->
+        <postStartupActivity implementation="io.cssvarslinker.CssVarsIndexService$IndexStartupActivity"/>
     </extensions>
 
     <idea-version since-build="241" until-build="252.*"/>

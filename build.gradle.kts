@@ -12,7 +12,9 @@ repositories {
 
 intellij {
     version.set("2024.1")
-    type.set("IU") // Peut être "IC" pour Community, mais "IU" contient plus d'APIs si besoin
+    type.set("IU")
+    downloadSources.set(true) // pour avoir l'autocomplétion sur les API internes
+    plugins.set(listOf("com.intellij.css"))
 }
 
 java {
