@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idea-plugin>
+    <id>css-vars-linker</id>
+    <name>CSS Vars Linker</name>
+    <vendor email="eddy.dezuraud@gmail.com">Eddy Dezuraud</vendor>
+
+    <version>1.0.0</version>
+    <description>
+        IntelliJ plugin that automatically exposes CSS custom properties (--my-token) defined in external files, such as those from design systems (e.g., node_modules/@acme/ui/style.css).
+        Perfect for Nuxt, Vue, or any project using native CSS design tokens. Enables proper autocompletion and validation inside .vue, .scss, and .css files.
+    </description>
+
+    <depends>com.intellij.modules.lang</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <css.customPropertyProvider implementation="io.cssvarslinker.CssExternalVarsProvider"/>
+    </extensions>
+
+    <idea-version since-build="233" until-build="241.*"/>
+</idea-plugin>
