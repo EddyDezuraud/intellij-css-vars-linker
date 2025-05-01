@@ -1,6 +1,6 @@
 plugins {
     id("java")
-    id("org.jetbrains.intellij") version "1.15.0"
+    id("org.jetbrains.intellij") version "1.17.0"
 }
 
 group = "io.cssvarslinker"
@@ -11,19 +11,29 @@ repositories {
 }
 
 intellij {
-    version.set("2025.1") // Version IntelliJ cible
-    type.set("IC") // IC = IntelliJ Community Edition, IU = Ultimate
-    plugins.set(listOf("css")) // Nécessaire pour interagir avec les fichiers CSS
+    version.set("2024.1")
+    type.set("IU") // Peut être "IC" pour Community, mais "IU" contient plus d'APIs si besoin
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
 }
 
 tasks {
     patchPluginXml {
-        sinceBuild.set("251")          // 2025.1 → build 251.xxx
-        untilBuild.set("252.*")
+        sinceBuild.set("241")
+        untilBuild.set("252.*") // Pour être compatible avec 2025.1
+    }
+
+    withType<JavaCompile> {
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
     }
 
     buildSearchableOptions {
-        enabled = false // Ce plugin n’ajoute pas d’options UI
+        enabled = false // Ce plugin ne fournit pas d'options de recherche
     }
 
     signPlugin {
@@ -33,6 +43,6 @@ tasks {
     }
 
     publishPlugin {
-        token.set(System.getenv("JETBRAINS_TOKEN")) // JetBrains Marketplace token (optionnel)
+        token.set(System.getenv("JETBRAINS_TOKEN")) // JetBrains Marketplace token
     }
 }

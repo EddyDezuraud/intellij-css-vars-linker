@@ -6,15 +6,14 @@
 
     <version>1.0.0</version>
     <description>
-        IntelliJ plugin that automatically exposes CSS custom properties (--my-token) defined in external files, such as those from design systems (e.g., node_modules/@acme/ui/style.css).
-        Perfect for Nuxt, Vue, or any project using native CSS design tokens. Enables proper autocompletion and validation inside .vue, .scss, and .css files.
+        IntelliJ plugin that extracts and indexes CSS custom properties (e.g. --primary-color) from external files like node_modules design systems. Enables completion and navigation.
     </description>
 
     <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <css.customPropertyProvider implementation="io.cssvarslinker.CssExternalVarsProvider"/>
+        <completion.contributor language="CSS" implementationClass="io.cssvarslinker.CssVarsCompletionContributor"/>
     </extensions>
 
-    <idea-version since-build="233" until-build="241.*"/>
+    <idea-version since-build="241" until-build="252.*"/>
 </idea-plugin>
