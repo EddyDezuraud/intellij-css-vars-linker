@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '1.17.0'
+}
+
+group 'io.cssvarslinker'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://packages.jetbrains.team/maven/p/intellij-platform/maven' }
+}
+
+dependencies {
+    implementation 'com.google.code.gson:gson:2.10.1'
+    // Inclure explicitement le SDK IntelliJ Platform
+    compileOnly "com.jetbrains.intellij.platform:platform-api:2024.1"
+    compileOnly "com.jetbrains.intellij.platform:platform-impl:2024.1"
+    configurations.all {
+        exclude group: 'com.fasterxml.jackson.module', module: 'jackson-module-kotlin'
+    }
+}
+
+intellij {
+    version.set('2024.1')
+    type.set('IU')
+    plugins.set([])
+}
+
+patchPluginXml {
+    sinceBuild.set('241')
+    untilBuild.set('242.*')
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+    }
+}

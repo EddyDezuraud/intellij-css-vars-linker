@@ -1,19 +1,38 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <idea-plugin>
-    <id>css-vars-linker</id>
+    <id>io.cssvarslinker</id>
     <name>CSS Vars Linker</name>
-    <vendor email="eddy.dezuraud@gmail.com">Eddy Dezuraud</vendor>
+    <version>1.0</version>
+    <vendor email="eddy.dezuraud@gmail.com" url="http://www.eddydezuraud.com">Eddy Dezuraud</vendor>
 
-    <version>1.0.0</version>
     <description>
-        IntelliJ plugin that extracts and indexes CSS custom properties (e.g. --primary-color) from external files like node_modules design systems. Enables completion and navigation.
+        A plugin for IntelliJ IDEA that provides autocompletion, navigation, and error suppression
+        for CSS custom properties (--my-variable) defined in external CSS files.
     </description>
 
     <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.css</depends>
+    <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <completion.contributor language="CSS" implementationClass="io.cssvarslinker.CssVarsCompletionContributor"/>
-    </extensions>
+        <!-- Déclare le type de fichier .cssvarsconfig -->
+        <fileType name="CSS Vars Config"
+                  implementationClass="io.cssvarslinker.CssVarsConfigFileType"
+                  fieldName="INSTANCE"
+                  fileNames=".cssvarsconfig"/>
 
-    <idea-version since-build="241" until-build="252.*"/>
+        <!-- Déclare l'index pour les variables CSS -->
+        <stubIndex implementation="io.cssvarslinker.CssVarsIndex"/>
+
+        <!-- Fournit l'autocomplétion -->
+        <completion.contributor
+                implementationClass="io.cssvarslinker.CssVarsCompletionContributor"/>
+
+        <!-- Fournit la navigation et la résolution -->
+        <psi.referenceContributor
+                implementationClass="io.cssvarslinker.CssVarsReferenceContributor"/>
+
+        <!-- Supprime les erreurs "Cannot resolve" -->
+        <inspectionSuppressor
+                implementationClass="io.cssvarslinker.CssVarsInspectionSuppressor"/>
+    </extensions>
 </idea-plugin>

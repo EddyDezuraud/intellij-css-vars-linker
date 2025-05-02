@@ -1,1 +1,0 @@
-rootProject.name = "css-vars-linker"
